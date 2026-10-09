@@ -6,6 +6,26 @@
         {
             var tasks = new List<Taskltem>();
 
+            new List<Taskltem>();
+
+            if (File.Exists("tasks.txt"))
+            {
+                var lines = File.ReadAllLines("tasks.txt");
+                foreach (var line in lines)
+                {
+                    var parts = line.Split("|");
+                    if(parts.Length == 2)
+                    {
+                        var task = new Taskltem()
+                        {
+                            Text = parts[0],
+                            IsDone = bool.Parse(parts[1])
+                        };
+                        tasks.Add(task);
+                    }
+                }
+            }
+
             while (true)
             {
                 Console.WriteLine(">");
@@ -68,6 +88,13 @@
                         break ;
 
                     case "exit":
+                        var saveLines = new List<string>();
+                        foreach (var task in tasks)
+                        {
+                            saveLines.Add($"{task.Text}|{task.IsDone}");
+                        }
+                        File.WriteAllLines("tasks.txt", saveLines);
+                        Console.WriteLine("Сохраненно");
                         return;
 
                     default:
