@@ -1,4 +1,6 @@
-﻿namespace todoApp
+﻿using System.ComponentModel.Design;
+
+namespace todoApp
 {
     internal class Program
     {
@@ -85,22 +87,49 @@
                         {
                             Console.WriteLine("Ты лох");
                         }
-                        break ;
+                        break;
+
+                    case "remove":
+                        if(parts.Length < 2)
+                        {
+                            Console.WriteLine("Укажите номер");
+                            break;
+                        }
+
+                        if (int.TryParse(parts[1], out int removeindex))
+                        {
+                            removeindex--;
+
+                            if (removeindex >= 0 && removeindex < tasks.Count)
+                            {
+                                tasks.Remove(tasks[removeindex]);
+                                Console.WriteLine($"Задача{removeindex + 1} удалена");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Нету такой задачи");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Нужен номер");
+                        }
+                            break;
 
                     case "exit":
-                        var saveLines = new List<string>();
-                        foreach (var task in tasks)
-                        {
-                            saveLines.Add($"{task.Text}|{task.IsDone}");
-                        }
-                        File.WriteAllLines("tasks.txt", saveLines);
-                        Console.WriteLine("Сохраненно");
-                        return;
+                                    var saveLines = new List<string>();
+                                    foreach (var task in tasks)
+                                    {
+                                        saveLines.Add($"{task.Text}|{task.IsDone}");
+                                    }
+                                    File.WriteAllLines("tasks.txt", saveLines);
+                                    Console.WriteLine("Сохраненно");
+                                    return;
 
-                    default:
-                        Console.WriteLine("Не знаю такой команды");
-                        break;
-                }
+                                default:
+                                    Console.WriteLine("Не знаю такой команды");
+                                    break;
+                                }
             }
         }
     }
