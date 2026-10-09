@@ -7,6 +7,7 @@ namespace todoApp
         static void Main(string[] args)
         {
             var tasks = new List<Taskltem>();
+            var notes = new List<string>();
 
             new List<Taskltem>();
 
@@ -115,6 +116,28 @@ namespace todoApp
                             Console.WriteLine("Нужен номер");
                         }
                             break;
+                    case "note":
+                        if (parts.Length < 2)
+                        {
+                            Console.WriteLine("Что записать?");
+                            break;
+                        }
+
+                        notes.Add(parts[1]);
+                        Console.WriteLine($"Запись сохраненна: {parts[1]}");
+                        break;
+
+                    case "notes":
+                        if (notes.Count == 0)
+                        {
+                            Console.WriteLine("Нет записей");
+                            break;
+                        }
+                        for (int i = 0; i < notes.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}.{notes[i]}");
+                        }
+                        break ;
 
                     case "exit":
                                     var saveLines = new List<string>();
